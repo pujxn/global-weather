@@ -3,7 +3,7 @@ import { type ReactNode } from "react";
 type Props = {
   children: ReactNode;
   title: string;
-  childrenClassName: string;
+  childrenClassName?: string;
 };
 
 const Card = ({ children, title, childrenClassName }: Props) => {
