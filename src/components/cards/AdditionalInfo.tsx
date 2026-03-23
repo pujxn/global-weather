@@ -9,13 +9,14 @@ import Pressure from "../../../src/assets/pressure-svgrepo-com.svg?react";
 import Wind from "../../../src/assets/wind-svgrepo-com.svg?react";
 import Uv from "../../../src/assets/uv-index-svgrepo-com.svg?react";
 import UpArrow from "../../../src/assets/up-arrow-svgrepo-com.svg?react";
+import type { Coords } from "../../types";
 
-type Props = {};
+type Props = { coords: Coords };
 
-const AdditionalInfo = ({}: Props) => {
+const AdditionalInfo = ({ coords }: Props) => {
   const { data } = useSuspenseQuery({
-    queryKey: ["weather"],
-    queryFn: () => getWeather({ lat: 10, lon: 36 }),
+    queryKey: ["weather", coords],
+    queryFn: () => getWeather(coords),
   });
 
   return (
