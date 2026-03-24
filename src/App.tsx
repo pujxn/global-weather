@@ -8,6 +8,7 @@ import type { Coords } from "./types";
 import LocationDropdown from "./components/dropdowns/LocationDropdown";
 import { useQuery } from "@tanstack/react-query";
 import { getGeocode } from "./api";
+import MapTypeDropdown from "./components/dropdowns/MapTypeDropdown";
 
 function App() {
   const [coordinates, setCoordinates] = useState<Coords>({
@@ -15,6 +16,7 @@ function App() {
     lon: 74,
   });
   const [location, setLocation] = useState("Mumbai");
+  const [mapType, setMapType] = useState("clouds_new");
 
   const { data: geocodeData } = useQuery({
     queryKey: ["geocode", location],
@@ -30,6 +32,10 @@ function App() {
     setLocation(location);
   };
 
+  const onChangeMapType = (mapType: string) => {
+    setMapType(mapType);
+  };
+
   const coords =
     location === "custom"
       ? coordinates
@@ -37,11 +43,27 @@ function App() {
 
   return (
     <div className="flex flex-col gap-8">
-      <LocationDropdown
-        location={location}
-        onChangeLocation={onChangeLocation}
-      />
-      <Map coords={coords} onMapClick={onMapClick} />
+      <div className="flex gap-8">
+        <div className="flex gap-4 items-center">
+          <label className="text-xl font-semibold" htmlFor="city">
+            Location:
+          </label>
+          <LocationDropdown
+            location={location}
+            onChangeLocation={onChangeLocation}
+          />
+        </div>
+        <div className="flex gap-4 items-center">
+          <label className="text-xl font-semibold" htmlFor="map-type">
+            Map Type:
+          </label>
+          <MapTypeDropdown
+            mapType={mapType}
+            onChangeMapType={onChangeMapType}
+          />
+        </div>
+      </div>
+      <Map coords={coords} onMapClick={onMapClick} mapType={mapType} />
       <CurrentWeather coords={coords} />
       <HourlyForecast coords={coords} />
       <DailyForecast coords={coords} />

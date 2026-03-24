@@ -12,11 +12,14 @@ type Props = { location: string; onChangeLocation: (location: string) => void };
 const LocationDropdown = ({ location, onChangeLocation }: Props) => {
   return (
     <Select value={location} onValueChange={(value) => onChangeLocation(value)}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger id="city" className="w-[180px]">
         <SelectValue placeholder="Cities" />
       </SelectTrigger>
       <SelectContent className="z-1001">
         <SelectGroup>
+          {location === "custom" && (
+            <SelectItem value="custom">Custom</SelectItem>
+          )}
           {locations.map((city) => (
             <SelectItem key={city} value={city}>
               {city}
