@@ -7,19 +7,21 @@ import {
   SelectValue,
 } from "../ui/select";
 
-type Props = {};
+type Props = { location: string; onChangeLocation: (location: string) => void };
 
-const LocationDropdown = ({}: Props) => {
+const LocationDropdown = ({ location, onChangeLocation }: Props) => {
   return (
-    <Select>
+    <Select value={location} onValueChange={(value) => onChangeLocation(value)}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Theme" />
+        <SelectValue placeholder="Cities" />
       </SelectTrigger>
       <SelectContent className="z-1001">
         <SelectGroup>
-          <SelectItem value="light">Light</SelectItem>
-          <SelectItem value="dark">Dark</SelectItem>
-          <SelectItem value="system">System</SelectItem>
+          {locations.map((city) => (
+            <SelectItem key={city} value={city}>
+              {city}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
@@ -27,3 +29,15 @@ const LocationDropdown = ({}: Props) => {
 };
 
 export default LocationDropdown;
+
+const locations = [
+  "New York",
+  "London",
+  "Tokyo",
+  "Paris",
+  "Dubai",
+  "Singapore",
+  "Sydney",
+  "Mumbai",
+  "Delhi",
+];

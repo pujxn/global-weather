@@ -1,3 +1,4 @@
+import { LocationsSchema } from "./schemas/geocodeSchema";
 import { WeatherSchema } from "./schemas/weatherSchema";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -8,4 +9,13 @@ export async function getWeather({ lat, lon }: { lat: number; lon: number }) {
   );
   const data = await res.json();
   return WeatherSchema.parse(data);
+}
+
+export async function getGeocode(cityName: string) {
+  const res = await fetch(
+    `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`,
+  );
+  const data = await res.json();
+
+  return LocationsSchema.parse(data);
 }
