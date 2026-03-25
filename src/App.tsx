@@ -12,6 +12,8 @@ import MapTypeDropdown from "./components/dropdowns/MapTypeDropdown";
 import MapLegend from "./components/MapLegend";
 import CurrentWeatherSkeleton from "./components/skeletons/CurrentWeatherSkeleton";
 import DailyForecastSkeleton from "./components/skeletons/DailyForecastSkeleton";
+import HourlyForecastSkeleton from "./components/skeletons/HourlyForecastSkeleton";
+import AdditionalInfoSkeleton from "./components/skeletons/AdditionalInfoSkeleton";
 
 function App() {
   const [coordinates, setCoordinates] = useState<Coords>({
@@ -73,11 +75,15 @@ function App() {
       <Suspense fallback={<CurrentWeatherSkeleton />}>
         <CurrentWeather coords={coords} />
       </Suspense>
-      <HourlyForecast coords={coords} />
+      <Suspense fallback={<HourlyForecastSkeleton />}>
+        <HourlyForecast coords={coords} />
+      </Suspense>
       <Suspense fallback={<DailyForecastSkeleton />}>
         <DailyForecast coords={coords} />
       </Suspense>
-      <AdditionalInfo coords={coords} />
+      <Suspense fallback={<AdditionalInfoSkeleton />}>
+        <AdditionalInfo coords={coords} />
+      </Suspense>
     </div>
   );
 }
